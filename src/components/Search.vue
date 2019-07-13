@@ -47,10 +47,10 @@ export default {
   methods: {
     submitSearchForm() {
       this.setFilmInfo(this.film);
-      // this.setProgressBar(5)
+      this.setProgressBar(5);
     },
 
-    ...mapMutations(["setFilmInfo"])
+    ...mapMutations(["setFilmInfo", "setProgressBar"])
   }
 };
 </script>
