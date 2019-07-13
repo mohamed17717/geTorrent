@@ -1,24 +1,25 @@
 <template>
-  <div id="app">
-    <h1>geTorrent</h1>
-
-    <Search />
-    <Torrent />
-    <Subtitle />
+  <div id="app" class="home">
+    <Top />
+    <!-- <Download /> -->
+    <!-- <Images /> -->
+    <Bottom />
   </div>
 </template>
 
 <script>
-import Search from "@/components/Search.vue";
-import Torrent from "@/components/Torrent.vue";
-import Subtitle from "@/components/Subtitle.vue";
+import Top from "@/components/Top.vue";
+// import Download from '@/components/Download.vue'
+// import Images from '@/components/Images.vue'
+import Bottom from "@/components/Bottom.vue";
 
 export default {
   name: "app",
   components: {
-    Search,
-    Torrent,
-    Subtitle
+    Top,
+    // Download,
+    // Images,
+    Bottom
   }
 };
 </script>
