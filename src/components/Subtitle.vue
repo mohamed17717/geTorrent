@@ -1,6 +1,24 @@
 <template>
-  <div id="subtitle">
-    <h1>Subtitle</h1>
+  <div class="subtitle" v-if="subtitles.length">
+    <h3>تحميل الترجمة</h3>
+
+    <div class="btns">
+      <button
+        v-for="(subtitle, index) in subtitles"
+        :key="index"
+        @click="helper.openUrlInNewTab(subtitle.directUrl || subtitle.url)"
+      >
+        <div class="text">
+          <p>
+            {{ subtitle.language === "Arabic" ? "عربي" : "انجليزي" }}
+            ({{ subtitle.feedback }})
+          </p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-language"></i>
+        </div>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -11,7 +29,7 @@ export default {
   name: "Subtitle",
   date() {
     return {
-      subtitles: [],
+      subtitles: null,
       scrapingMapParent: {
         getSearchResults(parentElement) {
           let elms = parentElement.querySelectorAll(
@@ -208,14 +226,17 @@ export default {
 
   watch: {
     name: function() {
+      console.log("name");
       this.subtitles = [];
     },
 
     year: function() {
+      console.log("year");
       this.subtitles = [];
     },
 
     subtitles: function() {
+      console.log("subtitles", this.subtitles);
       if (this.subtitles.length === 0) {
         this.scrapeSubtitle(
           this.scrapingMap.yifysubtitles,
