@@ -15,11 +15,11 @@
           <div class="icon">
             <i v-if="quality.torrentURL" class="fa fa-download">
               {{ setFilmCover(torrent) }}
-              <!-- {{ setFilmPictures({ pictures: [] }) }} -->
+              {{ setFilmPictures({ pictures: [] }) }}
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
               {{ setFilmCover(quality) }}
-              <!-- {{ setFilmPictures(quality) }} -->
+              {{ setFilmPictures(quality) }}
             </i>
           </div>
         </button>
@@ -386,8 +386,8 @@ export default {
     },
 
     ...mapMutations([
-      "setFilmCover"
-      // 'setFilmPictures',
+      "setFilmCover",
+      "setFilmPictures"
       // 'setToProgressBar'
     ])
   },
