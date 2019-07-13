@@ -12,8 +12,8 @@
       </nav>
     </div>
     <ProgressBar />
-    <NotFoundMessage />
     <Search />
+    <NotFoundMessage />
   </header>
 </template>
 
