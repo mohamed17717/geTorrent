@@ -11,6 +11,8 @@ export default {
   name: "Torrent",
   data() {
     return {
+      torrents: [],
+      scrapingMapIndex: null,
       scrapingMapParent: {
         getSearchResults(parentElement) {
           let results = this.vm.helper.toNormalArray(
