@@ -12,21 +12,6 @@ export default {
   date() {
     return {
       scrapingMapParent: {
-        setMovieName(name) {
-          this.search.movie.name = name;
-        },
-
-        setMovieYear(year) {
-          this.search.movie.year = year;
-        },
-
-        getSearchUrl() {
-          let movieName = this.search.movie.name;
-          let url = this.url + this.search.path;
-
-          return url.replace("{{movieName}}", movieName);
-        },
-
         getSearchResults(parentElement) {
           let elms = parentElement.querySelectorAll(
             this.search.resultsSelector
@@ -38,32 +23,6 @@ export default {
             .filter(result =>
               this.search.filterResultsByOne(result, this.vm.filters.one)
             );
-        },
-
-        absoluteUrl(relative) {
-          if (relative[0] === "/") {
-            return (this.url + relative)
-              .replace(/\/\//g, "/")
-              .replace(/:\//, "://");
-          }
-          return relative;
-        },
-
-        scrape(url) {
-          url = this.absoluteUrl(url);
-          return this.vm.request
-            .get(url)
-            .then(src => {
-              return this.vm.helper.removeUnwnatedTagsFromSrc(
-                src,
-                this.vm.constants.unwantedTags
-              );
-            })
-            .then(src => {
-              let elm = this.vm.helper.createOutputElement();
-              elm.innerHTML = src;
-              return elm;
-            });
         },
 
         getSubtitles(siteUrl) {
@@ -101,7 +60,9 @@ export default {
             parentOfData = parentOfData || elm;
             return this.subtitle.extractData(parentOfData);
           });
-        }
+        },
+
+        ...this.vm.getScrapingMapParent
       }
     };
   },
@@ -202,7 +163,7 @@ export default {
       };
     },
 
-    ...mapGetters(["getFilmInfo"])
+    ...mapGetters(["getFilmInfo", "getScrapingMapParent"])
   }
 };
 </script>
