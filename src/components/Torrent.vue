@@ -15,7 +15,7 @@
           <div class="icon">
             <i v-if="quality.torrentURL" class="fa fa-download">
               {{ setFilmCover(torrent) }}
-              {{ setFilmPictures({ pictures: [] }) }}
+              <!-- {{ setFilmPictures({ pictures: [] }) }} -->
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
               {{ setFilmCover(quality) }}
@@ -407,7 +407,8 @@ export default {
     torrents() {
       if (this.torrents.length === 0) {
         this.scrapingMapIndex = 0;
-        // this.setFilmCover({ cover: '' })
+        this.setFilmCover({ cover: "" });
+        this.setFilmPictures({ pictures: [] });
       } else {
         this.scrapingMapIndex = null;
       }
