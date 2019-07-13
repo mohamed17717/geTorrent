@@ -36,6 +36,7 @@ export default {
   position: fixed;
   top: 0;
   overflow: hidden;
+  z-index: 999999999999;
 
   .color {
     background-color: #2c3e50;
