@@ -21,5 +21,9 @@ export default {
 
   getFilmPictures({ film }) {
     return film.pictures;
+  },
+
+  getProgressBar({ progressBar }) {
+    return progressBar;
   }
 };

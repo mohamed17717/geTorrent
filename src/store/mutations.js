@@ -10,5 +10,13 @@ export default {
 
   setFilmPictures({ film }, { pictures }) {
     film.pictures = pictures;
+  },
+
+  setProgressBar(state, value) {
+    state.progressBar = value;
+  },
+
+  setToProgressBar(state, value) {
+    state.progressBar += value;
   }
 };

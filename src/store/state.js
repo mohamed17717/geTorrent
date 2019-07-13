@@ -51,5 +51,7 @@ export default {
           return elm;
         });
     }
-  }
+  },
+
+  progressBar: 0
 };
