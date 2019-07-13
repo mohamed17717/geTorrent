@@ -11,6 +11,7 @@ export default {
   name: "Subtitle",
   date() {
     return {
+      subtitles: [],
       scrapingMapParent: {
         getSearchResults(parentElement) {
           let elms = parentElement.querySelectorAll(
@@ -202,6 +203,26 @@ export default {
 
           console.error(err);
         });
+    }
+  },
+
+  watch: {
+    name: function() {
+      this.subtitles = [];
+    },
+
+    year: function() {
+      this.subtitles = [];
+    },
+
+    subtitles: function() {
+      if (this.subtitles.length === 0) {
+        this.scrapeSubtitle(
+          this.scrapingMap.yifysubtitles,
+          this.name,
+          this.year
+        );
+      }
     }
   }
 };
