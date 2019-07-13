@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "progress-bar",
@@ -24,10 +24,6 @@ export default {
     },
 
     ...mapGetters(["getProgressBar"])
-  },
-
-  methods: {
-    ...mapMutations(["setToProgressBar"])
   }
 };
 </script>
