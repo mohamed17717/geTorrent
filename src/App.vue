@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <h1>geTorrent</h1>
+
     <Search />
     <Torrent />
     <Subtitle />
