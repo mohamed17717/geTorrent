@@ -1,11 +1,11 @@
 <template>
-  <div id="content" v-show="getFilmCover">
+  <div id="content" v-if="getProgressBar >= 100">
     <div class="header">
       <h2>فيلم {{ getFilmName }} عام ({{ getFilmYear }})</h2>
       <div class="hr"></div>
     </div>
 
-    <div class="data">
+    <div class="data" v-if="getFilmCover">
       <div class="image">
         <img :src="getFilmCover" :alt="`${getFilmName} (${getFilmYear})`" />
       </div>
@@ -15,6 +15,7 @@
         <Subtitle />
       </div>
     </div>
+    <div v-else>مفيش نتايج بحث لده .. اتأكد ان الاسم صح</div>
   </div>
 </template>
 
@@ -31,7 +32,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getFilmName", "getFilmYear", "getFilmCover"])
+    ...mapGetters([
+      "getFilmName",
+      "getFilmYear",
+      "getFilmCover",
+      "getProgressBar"
+    ])
   }
 };
 </script>
