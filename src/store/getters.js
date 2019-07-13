@@ -9,5 +9,9 @@ export default {
 
   getFilmYear({ film }) {
     return film.year;
+  },
+
+  getScrapingMapParent({ scrapingMapParent }) {
+    return scrapingMapParent;
   }
 };
