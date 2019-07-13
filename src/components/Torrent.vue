@@ -327,15 +327,15 @@ export default {
       return siteObj
         .scrape(searchUrl)
         .then(elm => {
-          // vm.setToProgressBar(10)
+          vm.setToProgressBar(10);
           return siteObj.getSearchResults(elm);
         })
         .then(searchResults => {
-          // vm.setToProgressBar(10)
+          vm.setToProgressBar(10);
           console.log("search results: ", searchResults);
           for (let result of searchResults) {
             siteObj.getDataFromEachMoviePage(result.url).then(movieData => {
-              // vm.setToProgressBar(80 / searchResults.length)
+              vm.setToProgressBar(80 / searchResults.length);
               let x = vm.helper.combineObjects(
                 { qualities: movieData },
                 result
@@ -345,8 +345,7 @@ export default {
           }
         })
         .catch(err => {
-          // vm.setToProgressBar((80 - 20) / this.scrapingMapCount)
-
+          vm.setToProgressBar((80 - 20) / this.scrapingMapCount);
           console.error(err);
           this.scrapingMapIndexPlusOne();
         });
@@ -385,11 +384,7 @@ export default {
       }
     },
 
-    ...mapMutations([
-      "setFilmCover",
-      "setFilmPictures"
-      // 'setToProgressBar'
-    ])
+    ...mapMutations(["setFilmCover", "setFilmPictures", "setToProgressBar"])
   },
 
   watch: {
