@@ -1,5 +1,5 @@
 <template>
-  <div id="msg" v-if="getProgressBar >= 100 && !getFilmCover">
+  <div id="msg" v-if="getProgressBar >= 200 && !getFilmCover">
     ملاقيتش نتايج بحث مطابقة ... اتأكد من الاسم و السنة
   </div>
 </template>
