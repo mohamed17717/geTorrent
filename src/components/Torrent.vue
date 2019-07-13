@@ -14,11 +14,11 @@
           </div>
           <div class="icon">
             <i v-if="quality.torrentURL" class="fa fa-download">
-              <!-- {{ setFilmCover(torrent) }} -->
+              {{ setFilmCover(torrent) }}
               <!-- {{ setFilmPictures({ pictures: [] }) }} -->
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
-              <!-- {{ setFilmCover(quality) }}  -->
+              {{ setFilmCover(quality) }}
               <!-- {{ setFilmPictures(quality) }} -->
             </i>
           </div>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "Torrent",
@@ -65,6 +65,7 @@ export default {
       }
     };
   },
+
   computed: {
     name() {
       return this.getFilmInfo.name;
@@ -382,7 +383,13 @@ export default {
       } else {
         alert(" i dont know ");
       }
-    }
+    },
+
+    ...mapMutations([
+      "setFilmCover"
+      // 'setFilmPictures',
+      // 'setToProgressBar'
+    ])
   },
 
   watch: {
