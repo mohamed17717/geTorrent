@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "Subtitle",
@@ -197,11 +197,11 @@ export default {
       siteObj
         .scrape(searchUrl)
         .then(elm => {
-          // vm.setToProgressBar(10);
+          vm.setToProgressBar(10);
           return siteObj.getSearchResults(elm);
         })
         .then(searchResults => {
-          // vm.setToProgressBar(5);
+          vm.setToProgressBar(5);
 
           let result = searchResults[0];
           return siteObj.getSubtitles(result.url);
@@ -209,18 +209,20 @@ export default {
         .then(subtitles => {
           for (let subtitle of subtitles) {
             siteObj.getDataFromEachMoviePage(subtitle.url).then(s => {
-              // vm.setToProgressBar(85 / subtitles.length);
+              vm.setToProgressBar(85 / subtitles.length);
               subtitle.directUrl = s.url;
               vm.subtitles.push(subtitle);
             });
           }
         })
         .catch(err => {
-          // vm.setToProgressBar(85);
+          vm.setToProgressBar(85);
 
           console.error(err);
         });
-    }
+    },
+
+    ...mapMutations(["setToProgressBar"])
   },
   watch: {
     name: function() {
