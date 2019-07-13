@@ -6,19 +6,20 @@
         <button
           v-for="(quality, i) in torrent.qualities"
           :key="Math.round(Math.random() * 1000000) + i"
-          @click="openUrlInNewTab(quality)"
         >
+          <!-- @click="openUrlInNewTab(quality)" -->
           <div class="text">
             <p>{{ quality.quality || torrent.quality }}</p>
             <p>{{ quality.size }}</p>
           </div>
           <div class="icon">
             <i v-if="quality.torrentURL" class="fa fa-download">
-              {{ setFilmCover(torrent) }}
-              {{ setFilmPictures({ pictures: [] }) }}
+              <!-- {{ setFilmCover(torrent) }} -->
+              <!-- {{ setFilmPictures({ pictures: [] }) }} -->
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
-              {{ setFilmCover(quality) }} {{ setFilmPictures(quality) }}
+              <!-- {{ setFilmCover(quality) }}  -->
+              <!-- {{ setFilmPictures(quality) }} -->
             </i>
           </div>
         </button>
