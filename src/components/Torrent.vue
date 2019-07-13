@@ -259,6 +259,46 @@ export default {
     },
 
     ...mapGetters(["getFilmInfo", "getScrapingMapParent"])
+  },
+
+  methods: {
+    scrapeMovie(siteObj) {
+      let vm = this;
+      let name = this.name;
+      let year = this.year;
+
+      siteObj.setMovieName(name);
+      siteObj.setMovieYear(year);
+
+      let searchUrl = siteObj.getSearchUrl();
+
+      return siteObj
+        .scrape(searchUrl)
+        .then(elm => {
+          // vm.setToProgressBar(10)
+          return siteObj.getSearchResults(elm);
+        })
+        .then(searchResults => {
+          // vm.setToProgressBar(10)
+          console.log("search results: ", searchResults);
+          for (let result of searchResults) {
+            siteObj.getDataFromEachMoviePage(result.url).then(movieData => {
+              // vm.setToProgressBar(80 / searchResults.length)
+              let x = vm.helper.combineObjects(
+                { qualities: movieData },
+                result
+              );
+              vm.torrents.push(x);
+            });
+          }
+        })
+        .catch(err => {
+          // vm.setToProgressBar((80 - 20) / this.scrapingMapCount)
+
+          console.error(err);
+          this.scrapingMapIndexPlusOne();
+        });
+    }
   }
 };
 </script>
