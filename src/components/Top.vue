@@ -11,7 +11,7 @@
         </ul>
       </nav>
     </div>
-    <!-- <ProgressBar /> -->
+    <ProgressBar />
 
     <Search />
   </header>
@@ -19,13 +19,13 @@
 
 <script>
 import Search from "@/components/Search.vue";
-// import ProgressBar from '@/components/ProgressBar.vue'
+import ProgressBar from "@/components/ProgressBar.vue";
 
 export default {
   name: "top",
   components: {
-    Search
-    // ProgressBar
+    Search,
+    ProgressBar
   }
 };
 </script>
