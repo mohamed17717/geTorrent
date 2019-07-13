@@ -223,7 +223,8 @@ export default {
                 return aKB >= minSize ? a : b;
               };
 
-              return repeatationFilter(results, "quality", prefer);
+              results = repeatationFilter(results, "quality", prefer);
+              return results.length ? results : [undefined]; // [undefined to cause error]
             }
           },
           moviePage: {
