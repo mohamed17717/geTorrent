@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="home">
     <Top />
-    <!-- <Download /> -->
+    <Download />
     <!-- <Images /> -->
     <Bottom />
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 import Top from "@/components/Top.vue";
-// import Download from '@/components/Download.vue'
+import Download from "@/components/Download.vue";
 // import Images from '@/components/Images.vue'
 import Bottom from "@/components/Bottom.vue";
 
@@ -17,7 +17,7 @@ export default {
   name: "app",
   components: {
     Top,
-    // Download,
+    Download,
     // Images,
     Bottom
   },
