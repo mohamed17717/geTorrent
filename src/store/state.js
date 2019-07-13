@@ -17,6 +17,10 @@ export default {
       let movieName = this.search.movie.name;
       let url = this.url + this.search.path;
 
+      if (movieName.length <= 3) {
+        movieName += " " + this.search.movie.year;
+      }
+
       return url.replace("{{movieName}}", movieName);
     },
 
