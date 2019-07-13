@@ -1,7 +1,9 @@
 export default {
   film: {
     name: "",
-    year: ""
+    year: "",
+    cover: "",
+    pictures: []
   },
 
   scrapingMapParent: {
