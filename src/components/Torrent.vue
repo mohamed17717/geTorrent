@@ -5,5 +5,20 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  name: "Torrent",
+  computed: {
+    name() {
+      return this.getFilmInfo.name;
+    },
+
+    year() {
+      return this.getFilmInfo.year;
+    },
+
+    ...mapGetters(["getFilmInfo"])
+  }
+};
 </script>

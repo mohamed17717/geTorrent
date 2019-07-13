@@ -11,17 +11,11 @@ export default {
   name: "Subtitle",
   computed: {
     name() {
-      if (this.getFilmInfo.name) {
-        return this.getFilmInfo.name;
-      }
-      return "";
+      return this.getFilmInfo.name;
     },
 
     year() {
-      if (this.getFilmInfo.year) {
-        return this.getFilmInfo.year;
-      }
-      return "";
+      return this.getFilmInfo.year;
     },
 
     ...mapGetters(["getFilmInfo"])
