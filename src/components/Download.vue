@@ -15,7 +15,9 @@
         <Subtitle />
       </div>
     </div>
-    <div v-else>مفيش نتايج بحث لده .. اتأكد ان الاسم صح</div>
+    <div v-else style="text-align: center">
+      مفيش نتايج بحث لده .. اتأكد ان الاسم و السنة صح
+    </div>
   </div>
 </template>
 
