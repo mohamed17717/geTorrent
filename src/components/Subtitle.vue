@@ -233,11 +233,7 @@ export default {
 
     subtitles: function() {
       if (this.subtitles.length === 0) {
-        this.scrapeSubtitle(
-          this.scrapingMap.yifysubtitles,
-          this.name,
-          this.year
-        );
+        this.scrapeSubtitle(this.scrapingMap.yifysubtitles);
       }
     }
   }
