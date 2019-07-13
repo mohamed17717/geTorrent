@@ -27,9 +27,9 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Subtitle",
-  date() {
+  data() {
     return {
-      subtitles: null,
+      subtitles: [],
       scrapingMapParent: {
         getSearchResults(parentElement) {
           let elms = parentElement.querySelectorAll(
@@ -78,9 +78,7 @@ export default {
             let parentElm = elm.querySelector(this.subtitle.selector) || elm;
             return this.subtitle.extractData(parentElm);
           });
-        },
-
-        ...this.vm.getScrapingMapParent
+        }
       }
     };
   },
@@ -176,6 +174,7 @@ export default {
 
           // inherit from parent
           ...this.scrapingMapParent,
+          ...this.getScrapingMapParent,
           vm: vm // vue model
         }
       };
@@ -223,20 +222,16 @@ export default {
         });
     }
   },
-
   watch: {
     name: function() {
-      console.log("name");
       this.subtitles = [];
     },
 
     year: function() {
-      console.log("year");
       this.subtitles = [];
     },
 
     subtitles: function() {
-      console.log("subtitles", this.subtitles);
       if (this.subtitles.length === 0) {
         this.scrapeSubtitle(
           this.scrapingMap.yifysubtitles,
