@@ -12,7 +12,7 @@
       </nav>
     </div>
     <ProgressBar />
-
+    <NotFoundMessage />
     <Search />
   </header>
 </template>
@@ -20,12 +20,14 @@
 <script>
 import Search from "@/components/Search.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
+import NotFoundMessage from "@/components/NotFoundMessage.vue";
 
 export default {
   name: "top",
   components: {
     Search,
-    ProgressBar
+    ProgressBar,
+    NotFoundMessage
   }
 };
 </script>
