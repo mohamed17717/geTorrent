@@ -236,6 +236,10 @@ export default {
         this.scrapeSubtitle(this.scrapingMap.yifysubtitles);
       }
     }
+  },
+
+  updated() {
+    this.helper.calcWidth(".subtitle button");
   }
 };
 </script>
