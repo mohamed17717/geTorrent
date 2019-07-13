@@ -4,6 +4,9 @@ import store from "@/store";
 import MyPlugin from "@/plugins";
 import Meta from "vue-meta";
 
+require("@/assets/css/style.css");
+require("@/assets/js/script.js");
+
 Vue.config.productionTip = false;
 
 Vue.use(MyPlugin);
