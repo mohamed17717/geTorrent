@@ -56,9 +56,8 @@ export default {
           let url = this.absoluteUrl(movieURL);
 
           return this.scrape(url).then(elm => {
-            let parentOfData = elm.querySelector(this.subtitle.selector);
-            parentOfData = parentOfData || elm;
-            return this.subtitle.extractData(parentOfData);
+            let parentElm = elm.querySelector(this.subtitle.selector) || elm;
+            return this.subtitle.extractData(parentElm);
           });
         },
 
@@ -164,6 +163,46 @@ export default {
     },
 
     ...mapGetters(["getFilmInfo", "getScrapingMapParent"])
+  },
+
+  methods: {
+    scrapeSubtitle(siteObj) {
+      let vm = this;
+      let name = this.name;
+      let year = this.year;
+
+      siteObj.setMovieName(name);
+      siteObj.setMovieYear(year);
+
+      let searchUrl = siteObj.getSearchUrl();
+
+      siteObj
+        .scrape(searchUrl)
+        .then(elm => {
+          vm.setToProgressBar(10);
+          return siteObj.getSearchResults(elm);
+        })
+        .then(searchResults => {
+          vm.setToProgressBar(5);
+
+          let result = searchResults[0];
+          return siteObj.getSubtitles(result.url);
+        })
+        .then(subtitles => {
+          for (let subtitle of subtitles) {
+            siteObj.getDataFromEachMoviePage(subtitle.url).then(s => {
+              vm.setToProgressBar(85 / subtitles.length);
+              subtitle.directUrl = s.url;
+              vm.subtitles.push(subtitle);
+            });
+          }
+        })
+        .catch(err => {
+          vm.setToProgressBar(85);
+
+          console.error(err);
+        });
+    }
   }
 };
 </script>
