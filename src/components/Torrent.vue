@@ -82,6 +82,88 @@ export default {
       return this.getFilmInfo.year;
     },
 
+    scrapingMap() {
+      let vm = this;
+      return {
+        yts: {
+          name: "yts",
+          url: "https://yts.am/",
+          search: {
+            movie: {
+              name: null,
+              year: null
+            },
+            path: "browse-movies/{{movieName}}/all/all/0/latest",
+            method: "GET",
+            resultsSelector: ".container section .row > div",
+            mapOnResults(result) {
+              let textInfo = result
+                .querySelector("div")
+                .textContent.trim()
+                .split("\n");
+
+              return {
+                name: textInfo[0],
+                year: textInfo[1],
+                url: result.querySelector("a").href,
+                cover: result.querySelector("img").src
+              };
+            },
+            filterResultsByOne(result, { nameFilter, yearFilter }) {
+              let movie = this.movie;
+              return nameFilter(result, movie) && yearFilter(result, movie);
+            },
+            filterResultsByAll: results => [results[0]]
+          },
+          moviePage: {
+            dataParentSelector: "#movie-tech-specs",
+            extractData(dataparent) {
+              let torrentsURLs = vm.helper.toNormalArray(
+                dataparent.querySelectorAll('a[href*="/torrent/download"]')
+              );
+              torrentsURLs = torrentsURLs
+                .filter(elm => elm.classList.length)
+                .map(elm => elm.href);
+
+              let elm = dataparent;
+              dataparent = elm.querySelector(this.dataParentSelector) || elm;
+
+              let data = [];
+              let children = vm.helper.splitListOfElmsAccordingToTagName(
+                dataparent.children
+              );
+              // every span have div contain his data
+              let spans = children.SPAN;
+              let divs = children.DIV;
+
+              for (let i = 0; i < spans.length; i++) {
+                let span = spans[i];
+                let div = divs[i];
+                let torrentURL = torrentsURLs[i];
+                let tempData = {};
+
+                let quality = span.textContent.trim();
+                let sizeContiner = div.querySelector('div [title="File Size"]');
+                let size = sizeContiner.parentElement.textContent.trim();
+
+                tempData.quality = quality;
+                tempData.size = size;
+                tempData.torrentURL = torrentURL;
+
+                data.push(tempData);
+              }
+
+              return data;
+            }
+          },
+
+          // inheritance
+          ...this.scrapingMapParent,
+          vm: vm
+        }
+      };
+    },
+
     ...mapGetters(["getFilmInfo"])
   }
 };
