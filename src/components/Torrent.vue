@@ -260,6 +260,19 @@ export default {
       };
     },
 
+    sites() {
+      let list = [];
+      for (let i in this.scrapingMap) {
+        list.push(i);
+      }
+
+      return list;
+    },
+
+    site() {
+      return this.sites[this.scrapingMapIndex];
+    },
+
     ...mapGetters(["getFilmInfo", "getScrapingMapParent"])
   },
 
@@ -300,6 +313,32 @@ export default {
           console.error(err);
           this.scrapingMapIndexPlusOne();
         });
+    }
+  },
+
+  watch: {
+    name() {
+      this.torrents = [];
+    },
+
+    year() {
+      this.torrents = [];
+    },
+
+    scrapingMapIndex() {
+      let siteObj = this.scrapingMap[this.site];
+      if (siteObj) {
+        this.scrapeMovie(siteObj);
+      }
+    },
+
+    torrents() {
+      if (this.torrents.length === 0) {
+        this.scrapingMapIndex = 0;
+        // this.setFilmCover({ cover: '' })
+      } else {
+        this.scrapingMapIndex = null;
+      }
     }
   }
 };
