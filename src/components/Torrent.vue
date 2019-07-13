@@ -6,8 +6,8 @@
         <button
           v-for="(quality, i) in torrent.qualities"
           :key="Math.round(Math.random() * 1000000) + i"
+          @click="openUrlInNewTab(quality)"
         >
-          <!-- @click="openUrlInNewTab(quality)" -->
           <div class="text">
             <p>{{ quality.quality || torrent.quality }}</p>
             <p>{{ quality.size }}</p>
@@ -293,6 +293,10 @@ export default {
       return list;
     },
 
+    scrapingMapCount() {
+      return this.sites.length;
+    },
+
     site() {
       return this.sites[this.scrapingMapIndex];
     },
@@ -301,6 +305,14 @@ export default {
   },
 
   methods: {
+    scrapingMapIndexPlusOne() {
+      if (this.scrapingMapIndex === null) {
+        this.scrapingMapIndex = 0;
+      } else if (this.scrapingMapIndex < this.scrapingMapCount - 1) {
+        this.scrapingMapIndex++;
+      }
+    },
+
     scrapeMovie(siteObj) {
       let vm = this;
       let name = this.name;
@@ -337,6 +349,39 @@ export default {
           console.error(err);
           this.scrapingMapIndexPlusOne();
         });
+    },
+
+    copyText(text) {
+      let status;
+      let elm = this.helper.createElement("input");
+      elm.setAttribute("type", "text");
+      elm.setAttribute("value", text);
+      elm.select();
+
+      try {
+        status = document.execCommand("copy");
+      } catch (err) {
+        alert("Oops, unable to copy");
+      }
+
+      /* unselect the range */
+      elm.setAttribute("type", "hidden");
+      window.getSelection().removeAllRanges();
+      return status;
+    },
+
+    openUrlInNewTab({ torrentURL, magnets }) {
+      if (torrentURL) {
+        this.helper.openUrlInNewTab(torrentURL);
+      } else if (magnets.length) {
+        let magnet = magnets[0];
+        let status = this.copyText(magnet);
+        let msg = status ? "تم النسخ بنجاح" : "فشل النسخ";
+
+        this.helper.notification(msg, status);
+      } else {
+        alert(" i dont know ");
+      }
     }
   },
 
