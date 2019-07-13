@@ -409,6 +409,10 @@ export default {
         this.scrapingMapIndex = null;
       }
     }
+  },
+
+  updated() {
+    this.helper.calcWidth(".torrent button");
   }
 };
 </script>
