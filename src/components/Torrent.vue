@@ -35,9 +35,7 @@ export default {
             let data = this.moviePage.extractData(elm, this);
             return data;
           });
-        },
-
-        ...this.vm.getScrapingMapParent
+        }
       }
     };
   },
@@ -127,6 +125,7 @@ export default {
 
           // inheritance
           ...this.scrapingMapParent,
+          ...this.getScrapingMapParent,
           vm: vm
         },
 
@@ -220,10 +219,10 @@ export default {
                 "li",
                 "size"
               );
-              size = size.length
-                ? size[0].lastElementChild.innerText
-                : undefined;
-              return size;
+              if (!size.length) {
+                return;
+              }
+              return size[0].lastElementChild.innerText;
             },
 
             magnets(dataparent) {
@@ -253,6 +252,7 @@ export default {
 
           // inheritance
           ...this.scrapingMapParent,
+          ...this.getScrapingMapParent,
           vm: vm
         }
       };
