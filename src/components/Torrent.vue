@@ -160,6 +160,132 @@ export default {
           // inheritance
           ...this.scrapingMapParent,
           vm: vm
+        },
+
+        x1337: {
+          name: "1337x",
+          url: "https://1337x.to/",
+          search: {
+            movie: {
+              name: null,
+              year: null
+            },
+            path: "sort-category-search/{{movieName}}/Movies/seeders/desc/1/",
+            method: "GET",
+            resultsSelector: "table.table-list tr",
+
+            mapOnResults(result) {
+              let icon = result.querySelector("a.icon[href]");
+              let seeds = result.querySelector("td.seeds");
+              let leeches = result.querySelector("td.leeches");
+              let nameCell = result.querySelector('.name a[href^="/torrent"]');
+              let size = result.querySelector(".size");
+
+              if (!icon) {
+                return {};
+              }
+
+              size = size.innerHTML.match(/^[^<]+/) || [];
+              size = size[0];
+
+              let name = nameCell.innerText;
+              let nameParts = name.split(vm.constants.regex.year);
+              if (nameParts.length !== 3) {
+                nameParts = ["", "", ""];
+              }
+
+              let quality =
+                nameParts[2].match(vm.constants.regex.quality) || [];
+
+              return {
+                fullName: name,
+                name: nameParts[0].replace(/[^\w ]/g, "").trim(),
+                year: nameParts[1],
+                url: nameCell.getAttribute("href"),
+                seeds: parseInt(seeds.innerText),
+                leeches: parseInt(leeches.innerText),
+                size: size,
+                quality: quality[0],
+                icon: icon.getAttribute("href")
+              };
+            },
+            filterResultsByOne(result, { nameFilter, yearFilter, seedFilter }) {
+              let movie = this.movie;
+              return (
+                nameFilter(result, movie) &&
+                yearFilter(result, movie) &&
+                seedFilter(result)
+              );
+            },
+            filterResultsByAll(results, { repeatationFilter }) {
+              let prefer = (a, b) => {
+                let aKB = vm.helper.convertSizeToKB(a.size);
+                let bKB = vm.helper.convertSizeToKB(b.size);
+                let minSize = vm.helper.convertSizeToKB("400 MB");
+
+                if (aKB >= minSize && bKB >= minSize) {
+                  return aKB < bKB ? a : b;
+                }
+                return aKB >= minSize ? a : b;
+              };
+
+              return repeatationFilter(results, "quality", prefer);
+            }
+          },
+          moviePage: {
+            dataParentSelector: ".torrent-category-detail",
+
+            cover(dataparent) {
+              let cover =
+                dataparent.querySelector('img[src$="jpg"]') ||
+                dataparent.querySelector('img[data-original$="jpg"]');
+              if (!cover) {
+                return undefined;
+              }
+              cover = cover.getAttribute("data-original") || cover.src;
+              return cover;
+            },
+
+            size(dataparent) {
+              let size = vm.helper.getElementsmsWithText(
+                dataparent,
+                "li",
+                "size"
+              );
+              size = size.length
+                ? size[0].lastElementChild.innerText
+                : undefined;
+              return size;
+            },
+
+            magnets(dataparent) {
+              let magnets = dataparent.querySelectorAll('a[href^="magnet"]');
+              return vm.helper.toNormalArray(magnets).map(m => m.href);
+            },
+
+            pictures(dataparent) {
+              let pics = dataparent.querySelectorAll(
+                'p img[data-original$="jpg"]'
+              );
+              pics = vm.helper.toNormalArray(pics);
+              return pics.map(elm => elm.getAttribute("data-original"));
+            },
+
+            extractData: function(dataparent) {
+              return [
+                {
+                  magnets: this.magnets(dataparent),
+                  size: this.size(dataparent),
+                  cover: this.cover(dataparent),
+                  pictures: this.pictures(dataparent)
+                }
+              ];
+            }
+          },
+
+          // inheritance
+          ...this.scrapingMapParent,
+          vm: vm
         }
       };
     },
