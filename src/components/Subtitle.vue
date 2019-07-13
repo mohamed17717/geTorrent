@@ -114,6 +114,94 @@ export default {
       return this.getFilmInfo.year;
     },
 
+    scrapingMap() {
+      let vm = this;
+      return {
+        yifysubtitles: {
+          name: "yifysubtitles",
+          url: "https://www.yifysubtitles.com/",
+          // step 1 // search for a movie //
+          search: {
+            movie: {
+              name: null,
+              year: null
+            },
+            path: "search?q={{movieName}}",
+            method: "GET",
+            resultsSelector: "ul.media-list li",
+            mapOnResults: function(result) {
+              let name = result.querySelector("h3").innerText;
+              let url = result.querySelector("a");
+              let year = vm.helper.getElementsmsWithText(
+                result,
+                "span",
+                "year"
+              );
+
+              if (year.length) {
+                year = year[0].innerText.match(/\d+/);
+                year = year && year[0];
+              }
+              return {
+                name: name,
+                year: year,
+                url: url.getAttribute("href")
+              };
+            },
+
+            filterResultsByOne: function(result, { yearFilter, nameFilter }) {
+              // result is output from "mapOnResults()"
+              let movie = this.movie;
+              return nameFilter(result, movie) && yearFilter(result, movie);
+            },
+
+            filterResultsByAll: results => results
+          },
+          // step 2 // extract subtitles from movie page //
+          subtitles: {
+            selector: "tbody tr",
+            mapOnSubtitles: function(subtitle) {
+              let url = subtitle.querySelector('a[href^="/sub"]');
+              let feedback = subtitle.querySelector("td.rating-cell");
+              let language = subtitle.querySelector(".sub-lang");
+
+              return {
+                language: language.innerText,
+                url: url.getAttribute("href"),
+                feedback: parseInt(feedback.innerText)
+              };
+            },
+
+            filterSubtitlesByOne: function(subtitle, { languageFilter }) {
+              return languageFilter(subtitle);
+            },
+
+            filterSubtitlesByAll: function(subtitles, { repeatationFilter }) {
+              const preferingFunction = (a, b) =>
+                a["feedback"] >= b["feedback"] ? a : b;
+              return repeatationFilter(
+                subtitles,
+                "language",
+                preferingFunction
+              );
+            }
+          },
+          // step 3 // extract subtitle url from subtitle page //
+          subtitle: {
+            selector: "body",
+            extractData: function(container) {
+              let url = container.querySelector('a[href$="zip"]');
+              return { url: url.href };
+            }
+          },
+
+          // inherit from parent
+          ...this.scrapingMapParent,
+          vm: vm // vue model
+        }
+      };
+    },
+
     ...mapGetters(["getFilmInfo"])
   }
 };
