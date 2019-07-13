@@ -408,6 +408,7 @@ export default {
       if (this.torrents.length === 0) {
         this.scrapingMapIndex = 0;
         // this.setFilmCover({ cover: '' })
+        // this.setFilmPictures({ pictures: [] })
       } else {
         this.scrapingMapIndex = null;
       }

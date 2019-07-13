@@ -1,11 +1,12 @@
 <template>
-  <div id="content" v-if="getProgressBar >= 100">
+  <!-- v-show="getProgressBar >= 100" -->
+  <div id="content" v-show="getFilmCover">
     <div class="header">
       <h2>فيلم {{ getFilmName }} عام ({{ getFilmYear }})</h2>
       <div class="hr"></div>
     </div>
 
-    <div class="data" v-if="getFilmCover">
+    <div class="data">
       <div class="image">
         <img :src="getFilmCover" :alt="`${getFilmName} (${getFilmYear})`" />
       </div>
@@ -15,9 +16,9 @@
         <Subtitle />
       </div>
     </div>
-    <div v-else style="text-align: center">
+    <!-- <div v-if="!getFilmCover" style="text-align: center">
       مفيش نتايج بحث لده .. اتأكد ان الاسم و السنة صح
-    </div>
+    </div> -->
   </div>
 </template>
 
