@@ -29,4 +29,9 @@ export default {
       .then(data => (proxy.returnJSON ? data.json() : data.text()))
       .then(data => (proxy.returnJSON ? data[proxy.jsonName] : data));
   }
+
+  // fetch('https://yts.lt/')
+  //   .then(data => data.text())
+  //   .then(src => { console.log(src); document.body.innerHTML = src; return src;} )
+  //   .catch(err => console.log(err))
 };
