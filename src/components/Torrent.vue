@@ -80,7 +80,7 @@ export default {
       return {
         yts: {
           name: "yts",
-          url: "https://yts.am/",
+          url: "https://yts.lt/",
           search: {
             movie: {
               name: null,
