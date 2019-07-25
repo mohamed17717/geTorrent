@@ -110,11 +110,11 @@ export default {
           },
           moviePage: {
             dataParentSelector: "#movie-tech-specs",
-            extractData(dataparent) {
-              let torrentsURLs = vm.helper.toNormalArray(
-                dataparent.querySelectorAll('a[href*="/torrent/download"]')
-              );
-              torrentsURLs = torrentsURLs
+            extractor(dataparent) {
+              let torrentsURLs = vm.helper
+                .toNormalArray(
+                  dataparent.querySelectorAll('a[href*="/torrent/download"]')
+                )
                 .filter(elm => elm.classList.length)
                 .map(elm => elm.href);
 
@@ -147,6 +147,9 @@ export default {
               }
 
               return data;
+            },
+            extractData(dataparent) {
+              return this.extractor(dataparent);
             }
           },
 
