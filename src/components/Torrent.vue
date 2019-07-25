@@ -152,8 +152,10 @@ export default {
               if (dataparent.querySelector("#movie-poster")) {
                 return this.extractor(dataparent);
               } else {
+                // cause error to go for other options
+                // throw new Error("this is not available without login");
                 console.log("this is not available without login");
-                return [];
+                // undefined.makeFuckinError
               }
             }
           },
@@ -345,11 +347,9 @@ export default {
           for (let result of searchResults) {
             siteObj.getDataFromEachMoviePage(result.url).then(movieData => {
               vm.setToProgressBar(80 / searchResults.length);
-              let x = vm.helper.combineObjects(
-                { qualities: movieData },
-                result
+              vm.torrents.push(
+                vm.helper.combineObjects({ qualities: movieData }, result)
               );
-              vm.torrents.push(x);
             });
           }
         })
@@ -406,6 +406,7 @@ export default {
     },
 
     scrapingMapIndex() {
+      console.log(this.site);
       let siteObj = this.scrapingMap[this.site];
       if (siteObj) {
         this.scrapeMovie(siteObj);
