@@ -149,7 +149,12 @@ export default {
               return data;
             },
             extractData(dataparent) {
-              return this.extractor(dataparent);
+              if (dataparent.querySelector("#movie-poster")) {
+                return this.extractor(dataparent);
+              } else {
+                console.log("this is not available without login");
+                return [];
+              }
             }
           },
 
