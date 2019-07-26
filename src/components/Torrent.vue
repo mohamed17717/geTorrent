@@ -398,7 +398,6 @@ export default {
                 );
               })
               .catch(err => {
-                console.log("hi mohamed");
                 console.error(err);
 
                 if (result.url.startsWith("https://yts.lt")) {
@@ -465,7 +464,6 @@ export default {
     },
 
     scrapingMapIndex() {
-      console.log(this.site);
       let siteObj = this.scrapingMap[this.site];
       if (siteObj) {
         this.scrapeMovie(siteObj);
@@ -473,7 +471,6 @@ export default {
     },
 
     torrents() {
-      console.log("torrent updated: ", this.torrents);
       if (this.torrents.length === 0) {
         this.scrapingMapIndex = 0;
         this.setFilmCover({ cover: "" });
