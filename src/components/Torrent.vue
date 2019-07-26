@@ -14,12 +14,21 @@
           </div>
           <div class="icon">
             <i v-if="quality.torrentURL" class="fa fa-download">
-              {{ setFilmCover(torrent) }}
-              {{ setFilmPictures(quality) }}
+              {{ torrent.cover ? setFilmCover(torrent) : null }}
+              <!-- {{ quality.pictures && quality.pictures.length ? setFilmPictures(quality): null }} -->
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
-              {{ setFilmCover({ cover: quality.cover || torrent.cover }) }}
-              {{ setFilmPictures(quality) }}
+              {{
+                !getFilmCover
+                  ? setFilmCover({ cover: quality.cover || torrent.cover })
+                  : ""
+              }}
+              <!--  || 'https://www.directv.com/img/movies.jpg' -->
+              {{
+                getFilmPictures.length === 0 && quality.pictures.length > 0
+                  ? setFilmPictures(quality)
+                  : ""
+              }}
             </i>
           </div>
         </button>
@@ -357,7 +366,12 @@ export default {
       return this.sites[this.scrapingMapIndex];
     },
 
-    ...mapGetters(["getFilmInfo", "getScrapingMapParent"])
+    ...mapGetters([
+      "getFilmInfo",
+      "getScrapingMapParent",
+      "getFilmCover",
+      "getFilmPictures"
+    ])
   },
 
   methods: {
@@ -389,6 +403,8 @@ export default {
           vm.setToProgressBar(10);
 
           function getSearchResult(result) {
+            console.log("result: ", result);
+            if (!result.url) return;
             siteObj
               .getDataFromEachMoviePage(result.url)
               .then(movieData => {
@@ -464,6 +480,8 @@ export default {
     },
 
     scrapingMapIndex() {
+      console.log("site: ", this.site);
+
       let siteObj = this.scrapingMap[this.site];
       if (siteObj) {
         this.scrapeMovie(siteObj);
@@ -471,6 +489,7 @@ export default {
     },
 
     torrents() {
+      console.log("torrents", this.torrents);
       if (this.torrents.length === 0) {
         this.scrapingMapIndex = 0;
         this.setFilmCover({ cover: "" });
