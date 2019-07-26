@@ -15,7 +15,7 @@
           <div class="icon">
             <i v-if="quality.torrentURL" class="fa fa-download">
               {{ setFilmCover(torrent) }}
-              <!-- {{ setFilmPictures({ pictures: [] }) }} -->
+              {{ setFilmPictures(quality) }}
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
               {{ setFilmCover({ cover: quality.cover || torrent.cover }) }}
@@ -169,10 +169,6 @@ export default {
               let qualities = this.qualities(dataparent);
               let sizes = this.sizes(dataparent);
 
-              console.log("torrents", torrents);
-              console.log("magnets", magnets);
-              console.log("qualities", qualities);
-              console.log("sizes", sizes);
               let data = [];
 
               for (let i = 0; i < qualities.length; i++) {
