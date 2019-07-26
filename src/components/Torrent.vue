@@ -18,7 +18,7 @@
               <!-- {{ setFilmPictures({ pictures: [] }) }} -->
             </i>
             <i v-else-if="quality.magnets" class="fa fa-magnet">
-              {{ setFilmCover(quality) }}
+              {{ setFilmCover({ cover: quality.cover || torrent.cover }) }}
               {{ setFilmPictures(quality) }}
             </i>
           </div>
@@ -110,54 +110,102 @@ export default {
           },
           moviePage: {
             dataParentSelector: "#movie-tech-specs",
+
+            isMagnet(url) {
+              return url.startsWith("magnet");
+            },
+
+            downloadBtns(dataparent) {
+              let torrentsSelector = 'a[href*="/torrent/download"]';
+              let magnetsSelector = 'a[href^="magnet"]';
+              let torrentElms = dataparent.querySelectorAll(torrentsSelector);
+              let elms = torrentElms.length
+                ? torrentElms
+                : dataparent.querySelectorAll(magnetsSelector);
+              let elmsArr = vm.helper.toNormalArray(elms);
+              let filter = elm =>
+                elm.classList.length === 0 && !elm.querySelector("span");
+
+              let first = elmsArr[0];
+              if (first && this.isMagnet(first.getAttribute("href"))) {
+                filter = elm =>
+                  elm.getAttribute("title") &&
+                  elm.querySelector("span.icon-in");
+              }
+              return elmsArr.filter(filter);
+            },
+
+            torrents(dataparent) {
+              let downloadBtns = this.downloadBtns(dataparent);
+              let first = downloadBtns[0];
+              if (first && this.isMagnet(first.getAttribute("href"))) return [];
+              return downloadBtns.map(elm => elm.getAttribute("href"));
+            },
+
+            magnets(dataparent) {
+              let downloadBtns = this.downloadBtns(dataparent);
+              let first = downloadBtns[0];
+              if (first && this.isMagnet(first.getAttribute("href")))
+                return downloadBtns.map(elm => elm.getAttribute("href"));
+              return [];
+            },
+
+            qualities(dataparent) {
+              let downloadBtns = this.downloadBtns(dataparent);
+              return downloadBtns.map(elm => elm.innerText);
+            },
+
+            sizes(dataparent) {
+              let elms = dataparent.querySelectorAll('span[title="File Size"]');
+              let elmsArr = vm.helper.toNormalArray(elms);
+              return elmsArr
+                .map(elm => elm.parentElement.innerText)
+                .filter(size => /\d+/.test(size));
+            },
+
             extractor(dataparent) {
-              let torrentsURLs = vm.helper
-                .toNormalArray(
-                  dataparent.querySelectorAll('a[href*="/torrent/download"]')
-                )
-                .filter(elm => elm.classList.length)
-                .map(elm => elm.href);
+              let torrents = this.torrents(dataparent);
+              let magnets = this.magnets(dataparent);
+              let qualities = this.qualities(dataparent);
+              let sizes = this.sizes(dataparent);
 
-              let elm = dataparent;
-              dataparent = elm.querySelector(this.dataParentSelector) || elm;
-
+              console.log("torrents", torrents);
+              console.log("magnets", magnets);
+              console.log("qualities", qualities);
+              console.log("sizes", sizes);
               let data = [];
-              let children = vm.helper.splitListOfElmsAccordingToTagName(
-                dataparent.children
-              );
-              // every span have div contain his data
-              let spans = children.SPAN;
-              let divs = children.DIV;
 
-              for (let i = 0; i < spans.length; i++) {
-                let span = spans[i];
-                let div = divs[i];
-                let torrentURL = torrentsURLs[i];
-                let tempData = {};
-
-                let quality = span.textContent.trim();
-                let sizeContiner = div.querySelector('div [title="File Size"]');
-                let size = sizeContiner.parentElement.textContent.trim();
-
-                tempData.quality = quality;
-                tempData.size = size;
-                tempData.torrentURL = torrentURL;
-
-                data.push(tempData);
+              for (let i = 0; i < qualities.length; i++) {
+                data.push({
+                  size: sizes[i],
+                  quality: qualities[i],
+                  torrentURL: torrents[i],
+                  magnets: [magnets[i]],
+                  pictures: []
+                });
               }
 
               return data;
             },
+
             extractData(dataparent) {
-              if (dataparent.querySelector("#movie-poster")) {
-                return this.extractor(dataparent);
-              } else {
-                // cause error to go for other options
-                // throw new Error("this is not available without login");
-                console.log("this is not available without login");
-                // undefined.makeFuckinError
+              if (!dataparent.querySelector("#movie-poster")) {
+                throw new Error("this is not available without login");
               }
+              return this.extractor(dataparent);
             }
+          },
+
+          getMirrorUrl(url) {
+            let ytsPath = url.split("/").pop();
+            ytsPath = ytsPath.split("-");
+            let ytsYear = ytsPath.pop();
+            let ytsName = ytsPath.join("-");
+
+            let mirrorHost = "https://www9.yify.is/";
+            let mirrorUrl = `${mirrorHost}movie/view/${ytsName}/${ytsYear}`;
+
+            return mirrorUrl;
           },
 
           // inheritance
@@ -343,14 +391,29 @@ export default {
         })
         .then(searchResults => {
           vm.setToProgressBar(10);
-          console.log("search results: ", searchResults);
-          for (let result of searchResults) {
-            siteObj.getDataFromEachMoviePage(result.url).then(movieData => {
-              vm.setToProgressBar(80 / searchResults.length);
-              vm.torrents.push(
-                vm.helper.combineObjects({ qualities: movieData }, result)
-              );
-            });
+
+          function getSearchResult(result) {
+            siteObj
+              .getDataFromEachMoviePage(result.url)
+              .then(movieData => {
+                vm.setToProgressBar(80 / searchResults.length);
+                vm.torrents.push(
+                  vm.helper.combineObjects({ qualities: movieData }, result)
+                );
+              })
+              .catch(err => {
+                console.log("hi mohamed");
+                console.error(err);
+
+                if (result.url.startsWith("https://yts.lt")) {
+                  let mirrorUrl = siteObj.getMirrorUrl(result.url);
+                  result.url = mirrorUrl;
+                  getSearchResult(result);
+                }
+              });
+          }
+          for (let searchResult of searchResults) {
+            getSearchResult(searchResult);
           }
         })
         .catch(err => {
@@ -414,6 +477,7 @@ export default {
     },
 
     torrents() {
+      console.log("torrent updated: ", this.torrents);
       if (this.torrents.length === 0) {
         this.scrapingMapIndex = 0;
         this.setFilmCover({ cover: "" });
