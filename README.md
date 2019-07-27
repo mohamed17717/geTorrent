@@ -50,13 +50,13 @@ Then open the ***Local*** url because i make it running only on specific hosts.
 ### Torrent
 
 - Torrents with many qualities
-- Choose the torrent with highest seeds (speedest one)
+- Filter torrents on the highest seeds (speedest one)
 - Scrape many sites until find the movie
 
 ### Subtitle
 
 - Subtitle 2 languages
-- Choose subtitle with the highest feedback
+- Filter subtitles with the highest feedback
 
 ### Design
 
