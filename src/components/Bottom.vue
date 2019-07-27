@@ -111,6 +111,7 @@
               هتعملها ابلود هنا
               <a
                 href="https://subtitletools.com/convert-text-files-to-utf8-online"
+                target="_blank"
                 >subtitletools</a
               >
               و بعدين تدوس ع الزرار الازرق و بعدين تحمل النسخة المتصلحة
