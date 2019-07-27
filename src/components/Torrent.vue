@@ -403,7 +403,6 @@ export default {
           vm.setToProgressBar(10);
 
           function getSearchResult(result) {
-            console.log("result: ", result);
             if (!result.url) return;
             siteObj
               .getDataFromEachMoviePage(result.url)
@@ -480,8 +479,6 @@ export default {
     },
 
     scrapingMapIndex() {
-      console.log("site: ", this.site);
-
       let siteObj = this.scrapingMap[this.site];
       if (siteObj) {
         this.scrapeMovie(siteObj);
@@ -489,7 +486,6 @@ export default {
     },
 
     torrents() {
-      console.log("torrents", this.torrents);
       if (this.torrents.length === 0) {
         this.scrapingMapIndex = 0;
         this.setFilmCover({ cover: "" });
