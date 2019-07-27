@@ -1,4 +1,5 @@
 <template>
+  <!-- v-show="getProgressBar >= 100" -->
   <div id="content" v-show="getFilmCover">
     <div class="header">
       <h2>فيلم {{ getFilmName }} عام ({{ getFilmYear }})</h2>
@@ -15,6 +16,9 @@
         <Subtitle />
       </div>
     </div>
+    <!-- <div v-if="!getFilmCover" style="text-align: center">
+      مفيش نتايج بحث لده .. اتأكد ان الاسم و السنة صح
+    </div> -->
   </div>
 </template>
 
@@ -31,7 +35,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getFilmName", "getFilmYear", "getFilmCover"])
+    ...mapGetters([
+      "getFilmName",
+      "getFilmYear",
+      "getFilmCover",
+      "getProgressBar"
+    ])
   }
 };
 </script>
