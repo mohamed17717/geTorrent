@@ -98,7 +98,7 @@
         <div class="faq">
           <div class="q">اعمل ايه لو الترجمة كانت حروفها غريبة</div>
           <div class="a">
-            <p>اقفل الصوت عشان الموسيقي مزعجة :"""</p>
+            <!-- <p>اقفل الصوت عشان الموسيقي مزعجة :"""</p>
             <iframe
               width="560"
               height="315"
@@ -106,7 +106,15 @@
               frameborder="0"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
-            ></iframe>
+            ></iframe> -->
+            <p>
+              هتعملها ابلود هنا
+              <a
+                href="https://subtitletools.com/convert-text-files-to-utf8-online"
+                >subtitletools</a
+              >
+              و بعدين تدوس ع الزرار الازرق و بعدين تحمل النسخة المتصلحة
+            </p>
           </div>
         </div>
       </div>
