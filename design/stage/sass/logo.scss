@@ -1,0 +1,12 @@
+@import 'vars';
+
+#logo{
+  font-family: 'Electrolize', sans-serif;
+  font-size: 30px;
+  color: $black;
+
+  span {
+    color: $lightBlue;
+    font-size: 1.3em;
+  }
+}

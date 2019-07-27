@@ -1,0 +1,26 @@
+header#search
+  .logo-container
+    include logo
+
+    nav
+      ul
+        li
+          a(href="#search") بحث
+        li
+          a(href="#content") تحميل
+        li
+          a(href="#images") صور
+        li
+          a(href="#notes") مساعدة
+        
+        
+  .search-container
+    form(onsubmit="return false")
+      input(type="text", id="movie-name", name="movieName", placeholder="اسم الفيلم", autocomplete="off", required)
+      input(type="number", id="movie-year", name="movieYear" ,min="1940", max="2019", placeholder="السنة", required)
+      button(type="submit")
+        span بحث
+        i.fa.fa-search
+
+      div#google-link
+        +link({})

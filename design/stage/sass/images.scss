@@ -1,0 +1,21 @@
+@import 'mixins';
+@import 'vars';
+
+#images {
+  @include width;
+  margin-bottom: 20px;
+
+  background-color: $sectionColor;
+  padding: 15px;
+
+  @include marginBottomAll(15px);
+
+  .image {
+    width: 80%;
+    margin: auto;
+
+    img {
+      width: 100%;
+    }
+  }
+}

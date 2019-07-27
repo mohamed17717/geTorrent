@@ -1,0 +1,97 @@
+@import 'mixins';
+@import 'vars';
+
+header {
+  @include width;
+  @include marginBottomAll(20px);
+  
+  .logo-container {
+    background-color: $sectionColor;
+    text-align: left;
+    padding: 6px 12px;
+    z-index: 555555;
+    display: flex;
+    justify-content: space-between;
+    direction: ltr;
+    align-items: center;
+
+    nav {
+      direction: rtl;
+      padding-right: 15px;
+
+      ul {
+        list-style: none;
+
+        li {
+          display: inline-block;
+          margin-left: 20px;
+
+          a {
+            text-decoration: none;
+            color: inherit;
+          }
+
+          color: $grey;
+          &:hover{
+            color: $darkBlack;
+          }
+        }
+      }
+    }
+  }
+
+
+  .search-container {
+    position: relative;
+
+    form {
+      @include btnAnimation($darkBlack, $veryDarkBlack);
+
+      font-size: 0;
+      text-align: center;
+
+      input,
+      button {
+        @include normalButtonAndInput
+      }
+
+      input {
+        margin-left: 10px;
+        color: $textSubColor;
+      }
+
+      input#movie-name {
+        width: 50%;
+        min-width: 100px;
+        max-width: 400px;
+      }
+
+      button {
+        background-color: $black;
+        color: $white;
+        cursor: pointer;
+
+        i {
+          margin-right: 5px;
+        }
+      }
+
+      #google-link {
+        font-size: 14px;
+        
+        margin-top: 10px;
+        height: 30px;
+        // opacity: 1;
+        overflow: hidden;
+        
+        a {
+          color: $black;
+          font-weight: bold;
+          text-decoration: none;
+          
+        }
+      }
+    }
+  }
+
+}

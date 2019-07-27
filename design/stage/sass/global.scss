@@ -1,0 +1,21 @@
+@import 'vars';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  direction: rtl;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Tajawal', sans-serif;
+  background-color: $bodyColor;
+  color: $textColor;
+}

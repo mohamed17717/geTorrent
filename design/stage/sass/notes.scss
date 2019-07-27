@@ -1,0 +1,69 @@
+@import 'mixins';
+@import 'vars';
+
+#notes {
+  @include width;
+  margin-bottom: 20px;
+
+  background-color: $sectionColor;
+  padding: 15px;
+
+  @include marginBottomAll(15px);
+
+  .faqs {
+    @include marginBottomAll(20px);
+
+    .faq {
+      border: 1px solid $lightGrey;
+      padding: 10px 12px;
+      @include marginBottomAll(5px);
+
+      .q {
+        font-weight: 600;
+        cursor: pointer;
+
+        &::after {
+          content: " ؟";
+        }
+
+        &::before {
+          content: "[+] ";
+        }
+      }
+
+      .a {
+        overflow: hidden;
+        margin-right: 30px;
+
+        a {
+          font-weight: bold;
+          text-decoration: none;
+          color: $black;
+          font-style: italic;
+        }
+
+        ul {
+          list-style: inside;
+
+          li::after {
+            content: " .";
+          }
+        }
+
+        p::after {
+          content: " .";
+        }
+
+        img, video, iframe {
+          display: block;
+          margin: auto;
+          max-width: 500px;
+          margin-top: 15px;
+        }
+        
+        // @include marginBottomAll(15px);
+      }
+    }
+  }
+
+}

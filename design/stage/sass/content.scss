@@ -1,0 +1,113 @@
+@import 'mixins';
+@import 'vars';
+
+#content {
+  @include width;
+  @include marginBottomAll(15px);
+
+  margin-bottom: 20px;
+  background-color: $sectionColor;
+  padding: 15px;
+
+  .header {
+    @include marginBottomAll(15px);
+
+    .hr {
+      width: 100%;
+      height: 1.4px;
+      background-color: $lightGrey;
+    }
+  }
+
+  .data {
+    display: flex;
+
+    .image {
+      margin-left: 15px;
+      max-width: 200px;
+      font-size: 0;
+
+      img {
+        width: 100%;
+      }
+
+    }
+
+    .download {
+      width: calc(100% - 200px);
+
+      .torrent,
+      .subtitle,
+      .magnet,
+      .stream {
+        @include marginBottomAll(15px);
+
+        .btns {
+          @include marginBottomAll(15px);
+
+          width: 80%;
+          max-width: 600px;
+          margin: auto;
+          display: flex;
+          justify-content: space-between;
+
+          button {
+            @include normalButtonAndInput;
+            @include inlineBlockAll;
+
+            width: calc(100%/3 - 3px);
+            min-width: 100px;
+            color: $white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            .icon {
+              font-size: 1.5em;
+            }
+  
+            .text {
+              font-size: 0.9em;
+            }
+          }
+        }
+      }
+
+      @mixin btns($color, $direction) {
+        .btns{
+          button {
+            background-color: $color;
+            direction: $direction;
+          }
+        }
+      }
+
+      .torrent {
+        @include btns($lightGreen, ltr);
+        @include btnAnimation($darkGreen, $veryDarkGreen);
+      }
+
+      .subtitle {
+        @include btns($lightBlue, rtl);
+        @include btnAnimation($darkBlue, $veryDarkBlue);
+
+        .btns button{
+          width: calc(100%/2 - 2px);
+        }
+      }
+
+      .magnet {
+        @include btns($lightRed, ltr);
+        @include btnAnimation($darkRed, $veryDarkRed);
+
+      }
+
+      .stream {
+        @include btns($lightRed, ltr);
+        @include btnAnimation($darkRed, $veryDarkRed);
+      }
+    }
+  }
+}

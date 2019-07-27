@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title geTorrent
+
+    // style
+    link(rel="stylesheet", href="css/style.css")
+
+    // logo font
+    link(href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet")
+    
+    // arabic font
+    link(href="https://fonts.googleapis.com/css?family=Tajawal&display=swap" rel="stylesheet")
+
+    // icons fontawesome
+    link(href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous")
+  body
+    include pug/mixins
+    include pug/header
+    include pug/content
+    include pug/images
+    include pug/notes
+    include pug/footer
+    include pug/notification
+    script(src="js/script.js")
