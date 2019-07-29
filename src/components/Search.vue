@@ -53,10 +53,9 @@ export default {
     },
 
     updateUrl() {
-      let newUrl =
-        location.origin +
-        location.pathname +
-        `?name=${this.film.name}&year=${this.film.year}`;
+      let film = this.film;
+      let host = location.origin + location.pathname;
+      let newUrl = host + `?name=${film.name}&year=${film.year}`;
       history.pushState({}, null, newUrl);
     },
 
