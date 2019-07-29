@@ -32,6 +32,7 @@
 
 <script>
 import { mapMutations } from "vuex";
+import { setTimeout } from "timers";
 
 export default {
   name: "Search",
@@ -64,7 +65,8 @@ export default {
 
       this.film.name = params.name;
       this.film.year = params.year;
-      this.submitSearchForm();
+      console.log(this.film);
+      setTimeout(this.submitSearchForm, 1000);
     }
   }
 };
