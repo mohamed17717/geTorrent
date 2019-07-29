@@ -49,6 +49,15 @@ export default {
     submitSearchForm() {
       this.setFilmInfo(this.film);
       this.setProgressBar(5);
+      this.updateUrl();
+    },
+
+    updateUrl() {
+      let newUrl =
+        location.origin +
+        location.pathname +
+        `?name=${this.film.name}&year=${this.film.year}`;
+      history.pushState({}, null, newUrl);
     },
 
     ...mapMutations(["setFilmInfo", "setProgressBar"])
