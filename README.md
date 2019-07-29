@@ -28,7 +28,7 @@ $ npm run serve
 DONE  Compiled successfully in 4221ms
 
   App running at:
-  - Local:   http://localhost:8081/ 
+  - Local:   http://localhost:8081/
   - Network: http://192.168.1.3:8081/
 
   Note that the development build is not optimized.
@@ -64,11 +64,12 @@ Then open the ***Local*** url because i make it running only on specific hosts.
 - Progress bar
 - User guide
 
-### Techniques
+### Others
 
 - Proxy (to avoid CORS in browser)
 - There is no backend and all process done in browser
 - Use mirror for torrent site to skip login require
+- User can share his search url
 
 ## License
 
