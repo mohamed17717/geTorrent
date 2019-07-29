@@ -51,6 +51,21 @@ export default {
     },
 
     ...mapMutations(["setFilmInfo", "setProgressBar"])
+  },
+
+  created() {
+    let query = window.location.search.slice(1);
+    if (query) {
+      let params = {};
+      query.split("&").map(item => {
+        let [name, value] = item.split("=");
+        params[decodeURI(name)] = decodeURI(value);
+      });
+
+      this.film.name = params.name;
+      this.film.year = params.year;
+      this.submitSearchForm();
+    }
   }
 };
 </script>
