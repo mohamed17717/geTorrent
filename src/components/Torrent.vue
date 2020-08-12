@@ -431,7 +431,8 @@ export default {
           vm.setToProgressBar((80 - 20) / this.scrapingMapCount);
           console.error(err);
           this.scrapingMapIndexPlusOne();
-        });
+        })
+        .finally(() => vm.setToProgressBar(100));
     },
 
     copyText(text) {

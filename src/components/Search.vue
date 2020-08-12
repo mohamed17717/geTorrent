@@ -16,7 +16,7 @@
         id="movie-year"
         name="movieYear"
         min="1940"
-        max="2019"
+        max="2020"
         placeholder="السنة"
         required
         v-model="film.year"
