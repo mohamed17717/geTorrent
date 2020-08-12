@@ -89,13 +89,13 @@ export default {
       return {
         yts: {
           name: "yts",
-          url: "https://yts.lt/",
+          url: "https://yts.mx/",
           search: {
             movie: {
               name: null,
               year: null
             },
-            path: "browse-movies/{{movieName}}/all/all/0/latest",
+            path: "browse-movies/{{movieName}}/all/all/0/latest/0/all",
             method: "GET",
             resultsSelector: ".container section .row > div",
             mapOnResults(result) {
@@ -403,6 +403,7 @@ export default {
           vm.setToProgressBar(10);
 
           function getSearchResult(result) {
+            console.log("man man : ", result);
             if (!result.url) return;
             siteObj
               .getDataFromEachMoviePage(result.url)
@@ -415,7 +416,7 @@ export default {
               .catch(err => {
                 console.error(err);
 
-                if (result.url.startsWith("https://yts.lt")) {
+                if (result.url.startsWith("https://yts.mx")) {
                   let mirrorUrl = siteObj.getMirrorUrl(result.url);
                   result.url = mirrorUrl;
                   getSearchResult(result);
