@@ -15,8 +15,8 @@
         type="number"
         id="movie-year"
         name="movieYear"
-        min="1940"
-        max="2020"
+        min="1900"
+        :max="currentYear"
         placeholder="السنة"
         required
         v-model="film.year"
@@ -60,6 +60,12 @@ export default {
     },
 
     ...mapMutations(["setFilmInfo", "setProgressBar"])
+  },
+
+  computed: {
+    currentYear() {
+      return new Date().getFullYear();
+    }
   },
 
   created() {
