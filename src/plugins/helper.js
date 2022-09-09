@@ -38,7 +38,7 @@ export default {
     for (let i = 0; i < list.length; i++) {
       let elm = list[i];
       let tagName = elm.tagName;
-      if (!elms.hasOwnProperty(tagName)) {
+      if (!Object.hasOwn(elms, tagName)) {
         elms[tagName] = [];
       }
 

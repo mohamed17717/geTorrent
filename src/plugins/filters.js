@@ -35,7 +35,7 @@ let filters = {
 
       items.map(item => {
         let key = item[uniqueKey];
-        if (uniques.hasOwnProperty(key)) {
+        if (Object.hasOwn(uniques, key)) {
           let old = uniques[key];
           uniques[key] = preferingFunction(old, item);
         } else {
