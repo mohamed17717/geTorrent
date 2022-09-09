@@ -6,7 +6,13 @@
       <button
         v-for="(subtitle, index) in subtitles"
         :key="index"
-        @click="helper.openUrlInNewTab(subtitle.directUrl || subtitle.url)"
+        @click="
+          helper.openUrlInNewTab(
+            subtitle.directUrl
+              ? url.replace(/\/$/, '') + subtitle.directUrl
+              : subtitle.url
+          )
+        "
       >
         <div class="text">
           <p>
@@ -29,6 +35,7 @@ export default {
   name: "Subtitle",
   data() {
     return {
+      url: "https://yifysubtitles.org/",
       subtitles: [],
       scrapingMapParent: {
         getSearchResults(parentElement) {
@@ -96,7 +103,7 @@ export default {
       return {
         yifysubtitles: {
           name: "yifysubtitles",
-          url: "https://yifysubtitles.org/",
+          url: vm.url,
           // step 1 // search for a movie //
           search: {
             movie: {
@@ -168,7 +175,7 @@ export default {
             selector: "body",
             extractData: function(container) {
               let url = container.querySelector('a[href$="zip"]');
-              return { url: url.href };
+              return { url: url.getAttribute("href") };
             }
           },
 
@@ -210,6 +217,7 @@ export default {
           for (let subtitle of subtitles) {
             siteObj.getDataFromEachMoviePage(subtitle.url).then(s => {
               vm.setToProgressBar(85 / subtitles.length);
+              console.log(s);
               subtitle.directUrl = s.url;
               vm.subtitles.push(subtitle);
             });
