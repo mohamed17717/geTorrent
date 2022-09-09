@@ -123,9 +123,7 @@
     <div id="footer">
       <div>
         Copyrights &copy;
-        <a href="https://fb.com/mohamed17717" target="_blank"
-          >Mohamed Mahmoud</a
-        >
+        <a href="https://devmhmd.com" target="_blank">Mohamed Mahmoud</a>
       </div>
     </div>
   </footer>
