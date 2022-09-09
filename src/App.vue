@@ -49,3 +49,8 @@ export default {
   }
 };
 </script>
+<style>
+body {
+  overflow-x: hidden;
+}
+</style>
