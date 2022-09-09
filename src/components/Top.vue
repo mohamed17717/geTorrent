@@ -1,7 +1,9 @@
 <template>
   <header id="search">
     <div class="logo-container">
-      <h1 id="logo">ge<span>T</span>orrent</h1>
+      <a href="/">
+        <h1 id="logo">ge<span>T</span>orrent</h1>
+      </a>
       <nav>
         <ul>
           <li><a href="#search">بحث</a></li>
@@ -31,3 +33,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#search a {
+  text-decoration: none;
+}
+</style>
