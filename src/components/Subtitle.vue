@@ -217,7 +217,6 @@ export default {
           for (let subtitle of subtitles) {
             siteObj.getDataFromEachMoviePage(subtitle.url).then(s => {
               vm.setToProgressBar(85 / subtitles.length);
-              console.log(s);
               subtitle.directUrl = s.url;
               vm.subtitles.push(subtitle);
             });
@@ -225,8 +224,6 @@ export default {
         })
         .catch(err => {
           vm.setToProgressBar(85);
-
-          console.error(err);
         });
     },
 

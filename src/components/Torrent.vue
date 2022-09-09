@@ -132,7 +132,6 @@ export default {
                 ? torrentElms
                 : dataparent.querySelectorAll(magnetsSelector);
 
-              // console.log("\n\nelms: ", elms);
               let elmsArr = vm.helper.toNormalArray(elms);
               let filter = elm =>
                 elm.classList.length === 0 && !elm.querySelector("span");
@@ -415,8 +414,6 @@ export default {
                 );
               })
               .catch(err => {
-                console.error(err);
-
                 if (result.url.startsWith("https://yts.mx")) {
                   let mirrorUrl = siteObj.getMirrorUrl(result.url);
                   result.url = mirrorUrl;
@@ -430,7 +427,6 @@ export default {
         })
         .catch(err => {
           vm.setToProgressBar((80 - 20) / this.scrapingMapCount);
-          console.error(err);
           this.scrapingMapIndexPlusOne();
         })
         .finally(() => vm.setToProgressBar(100));
