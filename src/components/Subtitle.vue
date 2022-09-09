@@ -96,7 +96,7 @@ export default {
       return {
         yifysubtitles: {
           name: "yifysubtitles",
-          url: "https://www.yifysubtitles.com/",
+          url: "https://yifysubtitles.org/",
           // step 1 // search for a movie //
           search: {
             movie: {
