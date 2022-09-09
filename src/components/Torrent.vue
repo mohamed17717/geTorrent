@@ -131,6 +131,8 @@ export default {
               let elms = torrentElms.length
                 ? torrentElms
                 : dataparent.querySelectorAll(magnetsSelector);
+
+              // console.log("\n\nelms: ", elms);
               let elmsArr = vm.helper.toNormalArray(elms);
               let filter = elm =>
                 elm.classList.length === 0 && !elm.querySelector("span");
@@ -403,7 +405,6 @@ export default {
           vm.setToProgressBar(10);
 
           function getSearchResult(result) {
-            console.log("man man : ", result);
             if (!result.url) return;
             siteObj
               .getDataFromEachMoviePage(result.url)

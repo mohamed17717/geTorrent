@@ -73,7 +73,7 @@ export default {
 
       this.film.name = params.name;
       this.film.year = params.year;
-      console.log(this.film);
+
       setTimeout(this.submitSearchForm, 1000);
     }
   }
